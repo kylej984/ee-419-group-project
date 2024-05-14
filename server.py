@@ -1,49 +1,36 @@
-import sys
-import os
 import random
 import string
 import time
+import threading
 from socket import *
 
-if (len(sys.argv) < 2):
-    print("Usage: python3 " + sys.argv[0] + " relay_port")
-    sys.exit(1)
-assert(len(sys.argv) == 2)
-relayPort = int(sys.argv[1])
+class Server:
+    def __init__(self):
+        # clients[client] = (socket, username)
+        self.clients = []
+        self.serverPort = input('Server port: ')
+        s = socket(AF_INET, SOCK_STREAM)
+        s.bind(('127.0.0.1', serverPort))
+        s.listen(5)
+        self.serverSocket = s
+        print('Server is listening on port ', serverPort)
 
-# TODO: Create a TCP socket for the server
+    def start_server(self):
+        while True:
+            s, addr = serverSocket.accept()
+            print('Accepted connection from ', addr)
+            username = connectionSocket.recv(1024).decode()
+            self.clients.append((s, username))
+            new_thread = threading.Thread(target=self.client_handling, args=(self, s, addr))
+            new_thread.start()
+            # thread not stored anyway
 
-serverPort = 12000
-serverSocket = socket(AF_INET, SOCK_STREAM)
-serverSocket.bind(('',serverPort))
-serverSocket.listen(1)
+    def broadcast(self, user_message):
+        for client in self.clients:
+            client.send(user_message)
 
-print('Server Awaits')
-while True:
-    connectionSocket,addr = serverSocket.accept()
-    data = connectionSocket.recv(1024).decode()
-    print('received: ' + data)
-    
-    #operate on sanitized data
-    modData = str(bin(int(data)));
-    
-    connectionSocket.send(modData.encode())
-    print('sent: ' + modData)
-    connectionSocket.close()
+    def client_handling(self, client_socket, client_address):
+        while True:
+            data = client_socket.recv(1024)
+            
 
-# TODO: Connect this socket to the relay at relay_port
-
-# TODO: Receive any data relayed from the relay (i.e., any data sent by the client to the relay)
-
-# Print debugging information
-#print("Data received: ", data)
-
-# Convert received number to binary
-#data = bin(int(data))
-
-# TODO: Send computed answer back to relay
-
-# Print debugging information
-#print("Data sent back: ", data)
-
-# TODO: Close any open sockets
