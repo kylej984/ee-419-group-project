@@ -4,6 +4,7 @@ import time
 import threading
 from socket import *
 
+
 class Server:
     def __init__(self):
         # clients[client] = (socket, addr, username)
@@ -35,5 +36,6 @@ class Server:
         while True:
             data = client_socket.recv(1024)
             self.broadcast(data)
+
 
 server1 = Server()
