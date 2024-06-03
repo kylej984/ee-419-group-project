@@ -1,7 +1,7 @@
 # Title: Server Script
 # Authors:
-#   Cooper Wharton
-#   Kyle Jeng
+#   Cooper Wharton: Entire server.py file; final draft of the client.py file, including functionalities and testing. Demo video.
+#   Kyle Jeng: Initial draft of the client.py file. Includes the input, message_handling, and init.
 # Institution:
 #   University of Washington Seattle
 #   Spring 2024
